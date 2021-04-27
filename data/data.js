@@ -156,3 +156,64 @@ exports.getProgramme = function(code, callback) {
         });
     });
 };
+
+// Export getStudent function
+exports.getStudent = function(id, callback) {
+    // Create SQL statement
+    // First get the student and their programme details
+    var sql = `
+        SELECT 
+            Students.id, 
+            Students.first_name, 
+            Students.last_name, 
+            Students.programme,
+            Programmes.name
+        FROM
+            Students,
+            Programmes
+        WHERE
+            Students.id = '1'
+            AND
+            Students.programme = Programmes.code
+        `;
+    // Execut query. Only one row returned.
+    db.get(sql, function(err, row) {
+        if (err) {
+            return console.error(err.message);
+        }
+        // Create programme object
+        var prog = new student.Programme(row.programme, row.name);
+        // Create student object
+        var stud = new student.Student(row.id, row.first_name, row.last_name, prog);
+        // Now get the grades for the student
+        sql = `
+            SELECT
+                Modules.code,
+                Modules.name,
+                Grades.grade
+            FROM
+                Modules, Grades
+            WHERE
+                Grades.student = ${id}
+                AND
+                Grades.module = Modules.code
+            `;
+        // Execute query. Multiple rows returned.
+        db.all(sql, function(err, rows) {
+            if (err) {
+                return console.error(err.message);
+            }
+            // Loop through each row and create a module object and attach a grade
+            for (var row of rows) {
+                // Create module object
+                var module = new student.Module(row.code, row.name);
+                // Create a module combined with grade
+                var grade = {module, grade:row.grade}
+                // Add module and grade to student
+                stud.modules.push(grade);
+            }
+            // Return student
+            callback(stud);
+        });
+    });
+};

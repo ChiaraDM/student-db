@@ -49,8 +49,10 @@ app.get("/programmes", function(req, res) {
 
 // Add /student endpoint
 app.get("/student/:id", function(req, res) {
-  // Return "Student <id>"
-  res.send("Student " + req.params.id);
+    // Call getStudent on data
+    data.getStudent(req.params.id, function(student) {
+        res.json(student);
+    });
 });
 
 // Add /students endpoint
