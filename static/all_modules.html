@@ -9,8 +9,16 @@
   <body>
     <h1>Modules</h1>
     <div ng-app="mainApp" ng-controller="moduleController">
-      <p>{{ module.code }}</p>
-      <p>{{ module.name }}</p>
-    </div>
+        <table border=1>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+          </tr>
+          <tr ng-repeat = "module in modules">
+            <td>{{ module.code }}</td>
+            <td>{{ module.name }}</td>
+          </tr>
+        </table>
+      </div>
   </body>
 </html>
