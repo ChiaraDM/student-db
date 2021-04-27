@@ -35,8 +35,10 @@ app.get("/programme/:code", function(req, res) {
 
 // Add /programmes endpoint
 app.get("/programmes", function(req, res) {
-  // Return "All programmes"
-  res.send("All programmes");
+    // Call getProgrammes on data
+    data.getProgrammes(function(programmes) {
+        res.json(programmes);
+    });
 });
 
 // Add /student endpoint
