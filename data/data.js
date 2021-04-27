@@ -116,3 +116,43 @@ exports.getModule = function(code, callback) {
         callback(module);
     });
 };
+
+// Export getProgramme function
+exports.getProgramme = function(code, callback) {
+    // Create SQL statement
+    // First get the programme
+    var sql = `
+        SELECT * FROM Programmes
+        WHERE code = '${code}'`;
+    // Execute query. Only one row returned
+    db.get(sql, function(err, row) {
+        if (err) {
+            return console.error(err.message);
+        }
+        // Create the programme object
+        var prog = new student.Programme(row.code, row.name);
+        // Now get the modules for the programme.
+        sql = `
+            SELECT Modules.code, Modules.name
+            FROM Modules, Programme_Modules
+            WHERE 
+                Programme_Modules.programme = '${code}'
+                AND
+                Programme_Modules.module = Modules.code`;
+        // Execute query. Multiple rows returned.
+        db.all(sql, function(err, rows) {
+            if (err) {
+                return console.error(err.message);
+            }
+            // Loop through each row and create a module object
+            for (var row of rows) {
+                // Create module object
+                var mod = new student.Module(row.code, row.name);
+                // Add module to programme
+                prog.modules.push(mod);
+            }
+            // Return programme
+            callback(prog);
+        });
+    });
+};
