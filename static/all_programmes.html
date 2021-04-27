@@ -9,16 +9,32 @@
   <body>
     <h1>Programmes</h1>
     <div ng-app="mainApp" ng-controller="programmeController">
-      <table border=1>
-        <tr>
-          <th>Code</th>
-          <th>Name</th>
-        </tr>
-        <tr ng-repeat = "programme in programmes">
-          <td>{{ programme.code }}</td>
-          <td>{{ programme.name }}</td>
-        </tr>
-      </table>
-    </div>
+        <table border=1>
+          <tr>
+            <th>Code</th>
+            <th>Name</th>
+          </tr>
+          <tr ng-repeat = "programme in programmes">
+            <td>{{ programme.code }}</td>
+            <td>{{ programme.name }}</td>
+            <td><input type="button" ng-click="selectProgramme(programme.code)" value="Select"></td>
+          </tr>
+        </table>
+      
+        <div id="selected">
+          <h2>{{ selectedProgramme.code }} {{ selectedProgramme.name }}</h2>
+          <h3>Modules</h3>
+          <table border=1>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+            </tr>
+            <tr ng-repeat="module in selectedProgramme.modules">
+              <td>{{ module.code }}</td>
+              <td>{{ module.name }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
   </body>
 </html>

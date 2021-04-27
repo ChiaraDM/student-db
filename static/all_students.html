@@ -9,20 +9,37 @@
   <body>
     <h1>Students</h1>
     <div ng-app="mainApp" ng-controller="studentController">
-      <table border=1>
-        <tr>
-          <th>ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Programme Name</th>
-        </tr>
-        <tr ng-repeat = "student in students">
-          <td>{{ student.id }}</td>
-          <td>{{ student.first_name }}</td>
-          <td>{{ student.last_name }}</td>
-          <td>{{ student.programme.name }}</td>
-        </tr>
-      </table>
-    </div>
+        <table border=1>
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Programme Name</th>
+          </tr>
+          <tr ng-repeat = "student in students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{{ student.programme.name }}</td>
+            <td><input type="button" ng-click="selectStudent(student.id)" value="Select"></td>
+          </tr>
+        </table>
+        <div id="selected">
+          <h2>{{ selectedStudent.id }} {{ selectedStudent.first_name }} {{ selectedStudent.last_name }}</h2>
+          <h3>Grades</h3>
+          <table border="1">
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Grade</th>
+            </tr>
+            <tr ng-repeat = "module in selectedStudent.modules">
+              <td>{{ module.module.code }}</td>
+              <td>{{ module.module.name }}</td>
+              <td>{{ module.grade }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
   </body>
 </html>
