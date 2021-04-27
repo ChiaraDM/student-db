@@ -23,8 +23,10 @@ app.get("/module/:code", function(req, res) {
 
 // Add /modules endpoint
 app.get("/modules", function(req, res) {
-  // Return "All modules"
-  res.send("All modules");
+    // Call getModules on data
+    data.getModules(function(modules) {
+        res.json(modules);
+    });
 });
 
 // Add /programme endpoint
