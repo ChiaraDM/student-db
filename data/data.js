@@ -98,3 +98,21 @@ exports.getModules = function(callback) {
         callback(modules);
     });
 };
+
+// Export getModule function
+exports.getModule = function(code, callback) {
+    // Create SQL statement
+    var sql = `
+        SELECT * FROM Modules
+        WHERE code = '${code}'`;
+    // Execute query. Only one row returned.
+    db.get(sql, function(err, row) {
+        if (err) {
+            return console.error(err.message);
+        }
+        // Create a module object
+        var module = new student.Module(row.code, row.name);
+        // Return module
+        callback(module);
+    });
+};

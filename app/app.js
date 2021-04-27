@@ -17,8 +17,10 @@ app.use(express.static("static"));
 
 // Add /module endpoint
 app.get("/module/:code", function(req, res) {
-  // Return "Module <code>"
-  res.send("Module " + req.params.code);
+    // Call getModule on data
+    data.getModule(req.params.code, function(module) {
+        res.json(module);
+    });
 });
 
 // Add /modules endpoint
