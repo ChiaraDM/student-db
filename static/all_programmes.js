@@ -5,8 +5,7 @@ var mainApp = angular.module("mainApp", []);
 
 // Create the controller
 mainApp.controller("programmeController", function($scope, $http) {
-  $scope.programmes = [
-    new Programme("001", "Test Program 1"),
-    new Programme("002", "Test Program 2")
-  ];
-});
+    $http.get("/programmes").then(function(response) {
+      $scope.programmes = response.data;
+    });
+  });
