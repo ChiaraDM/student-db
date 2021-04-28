@@ -17,6 +17,8 @@
           <tr ng-repeat = "module in modules">
             <td>{{ module.code }}</td>
             <td>{{ module.name }}</td>
+            <td><input type="button" ng-click="deleteModule(module.code)" value="Delete"></td>
+          <tr>
           </tr>
         </table>
       </div>

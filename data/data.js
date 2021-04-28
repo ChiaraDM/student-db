@@ -217,3 +217,14 @@ exports.getStudent = function(id, callback) {
         });
     });
 };
+
+// Deletes a module from the database
+exports.deleteModule = function(code, callback) {
+    // Create SQL delete statement
+    var sql = `DELETE FROM Modules WHERE code='${code}'`;
+    // Execute SQL delete statement
+    db.exec(sql, function(err) {
+      // Once completed, execute callback function
+      callback();
+    });
+  };
